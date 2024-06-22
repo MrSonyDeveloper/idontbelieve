@@ -38,6 +38,10 @@ dependencies {
     implementation libs.constraintlayout
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+    implementation libs.projectlombok.lombok
+    annotationProcessor libs.lombok
+
+    ///Test dependencies
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
