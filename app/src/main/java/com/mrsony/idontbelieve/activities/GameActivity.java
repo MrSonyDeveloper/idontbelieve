@@ -1,5 +1,6 @@
 package com.mrsony.idontbelieve.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.mrsony.idontbelieve.MainActivity;
 import com.mrsony.idontbelieve.R;
 import com.mrsony.idontbelieve.models.Question;
 import com.mrsony.idontbelieve.services.QuestionService;
@@ -24,11 +26,19 @@ public class GameActivity extends AppCompatActivity {
     private final QuestionService questionService = ServiceProvider.getService(QuestionService.class);
 
     private List<Question> questionList;
+
     private Question currentQuestion;
+    private int currentQuestionIndex = 0;
+
+    private int correctAnswersCount = 0;
 
     private LinearLayout gameLayout;
     private View currentQuestionRow;
     private View positiveBadge;
+    private View negativeBadge;
+    private View buttonView;
+    private TextView justificationTv;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,15 +47,20 @@ public class GameActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         gameLayout = findViewById(R.id.game_view);
-        positiveBadge = findViewById(R.id.badge_area);
+        positiveBadge = findViewById(R.id.positiveBadge);
+        negativeBadge = findViewById(R.id.negative_badge);
+        buttonView = findViewById(R.id.buttonView);
+        justificationTv = negativeBadge.findViewById(R.id.justificationTv);
 
         Button believeButton = findViewById(R.id.believe_btn);
+        believeButton.setOnClickListener(view -> onBelieveButtonClick(true));
 
-        believeButton.setOnClickListener(this::onBelieveButtonClick);
+        Button dontBeliveButton = findViewById(R.id.dont_believe_btn);
+        dontBeliveButton.setOnClickListener(view -> onBelieveButtonClick(false));
 
         questionList = questionService.getQuestions();
 
-        currentQuestion = questionList.get(0);
+        currentQuestion = questionList.get(currentQuestionIndex);
         currentQuestionRow = getLayoutFromQuestion(currentQuestion);
 
         gameLayout.addView(currentQuestionRow);
@@ -62,13 +77,33 @@ public class GameActivity extends AppCompatActivity {
         return questionView;
     }
 
-    private void onBelieveButtonClick(View view) {
+    private void onBelieveButtonClick(boolean answer) {
         gameLayout.removeView(currentQuestionRow);
-        positiveBadge.setVisibility(View.VISIBLE);
+        buttonView.setVisibility(View.GONE);
+        if (currentQuestion.isCorrectAnswer() == answer) {
+            positiveBadge.setVisibility(View.VISIBLE);
+            correctAnswersCount++;
+        } else {
+            negativeBadge.setVisibility(View.VISIBLE);
+            justificationTv.setText(currentQuestion.getJustification());
+        }
+        currentQuestionIndex++;
+
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             positiveBadge.setVisibility(View.GONE);
-            currentQuestionRow = getLayoutFromQuestion(questionList.get(1));
+            negativeBadge.setVisibility(View.GONE);
+            if (currentQuestionIndex >= questionList.size()) {
+                Intent intent = new Intent();
+                intent.putExtra(MainActivity.QUESTIONS_COUNT_KEY, questionList.size());
+                intent.putExtra(MainActivity.CORRECT_ANSWERS_COUNT_KEY, correctAnswersCount);
+                setResult(RESULT_OK, intent);
+                finish();
+                return;
+            }
+            currentQuestion = questionList.get(currentQuestionIndex);
+            currentQuestionRow = getLayoutFromQuestion(questionList.get(currentQuestionIndex));
             gameLayout.addView(currentQuestionRow);
-        }, 3000);
+            buttonView.setVisibility(View.VISIBLE);
+        }, 3500);
     }
 }

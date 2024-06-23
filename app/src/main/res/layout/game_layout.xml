@@ -16,44 +16,82 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:baselineAligned="false">
-
-    <LinearLayout
-        android:id="@+id/game_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:layout_weight="1">
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/badge_area"
-            android:layout_width="0dp"
+            android:id="@+id/game_view"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/badge_text"
+            <LinearLayout
+                android:id="@+id/positiveBadge"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Верно"
-                android:textColor="@color/cardview_dark_background"
-                android:textAllCaps="true"
-                android:textSize="20sp" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/positive_answer" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/right"
+                    android:textAllCaps="true"
+                    android:textColor="@color/positive_answer"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/negative_badge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/negative_answer" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/not_true"
+                    android:textAllCaps="true"
+                    android:textColor="@color/negative_answer"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/justificationTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/buttonView"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            style="?android:attr/buttonBarButtonStyle">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/believe_btn"
@@ -61,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="Верю" />
+                android:text="@string/believe" />
 
             <Button
                 android:id="@+id/dont_believe_btn"
@@ -69,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="Не верю" />
+                android:text="@string/dont_believe" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

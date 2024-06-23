@@ -3,4 +3,10 @@
 
     <string name="hello_text">Добро пожаловать в увлекательную корпоративную игру Верю Не верю\n Для продолжения тапни по экрану</string>
     <string name="questionNumber">Утверждение #%d</string>
+    <string name="right">Верно</string>
+    <string name="believe">Верю</string>
+    <string name="dont_believe">Не верю</string>
+    <string name="not_true">НЕ ВЕРНО</string>
+    <string name="without_errors_result">"Вы прошли игру без единой ошибки"</string>
+    <string name="percent_result">"Вы прошли игру на %d%%"</string>
 </resources>
