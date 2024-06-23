@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true">
 
     <TextView
         android:id="@+id/question_number"
@@ -11,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textFontWeight="@integer/material_motion_duration_long_1"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:layout_marginBottom="8dp"
         tools:text="Утверждение #1" />
 
@@ -19,7 +21,8 @@
         android:id="@+id/question_statement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14dp"
+        android:textAlignment="center"
+        android:textSize="18dp"
         tools:text="Что и как тут работает то?" />
 
 </LinearLayout>
