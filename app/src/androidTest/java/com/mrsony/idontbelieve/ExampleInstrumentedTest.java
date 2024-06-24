@@ -4,6 +4,7 @@ import static com.adevinta.android.barista.assertion.BaristaContentDescriptionAs
 import static com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertContains;
 import static com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed;
 import static com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn;
+import static com.adevinta.android.barista.interaction.BaristaClickInteractions.longClickOn;
 import static com.adevinta.android.barista.interaction.BaristaSleepInteractions.sleep;
 import static com.google.android.apps.common.testing.accessibility.framework.strings.StringManager.getString;
 
@@ -30,13 +31,6 @@ public class ExampleInstrumentedTest {
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.mrsony.idontbelieve", appContext.getPackageName());
-    }
-
-    @Test
     public void basicScenario() {
 
         boolean[] answers = new boolean[] {false,true,true,true};
@@ -47,27 +41,28 @@ public class ExampleInstrumentedTest {
 
         int i = 1;
         for (boolean answ : answers) {
-            try {
             Question("Утверждение #" + i, answ);
-            } catch (Exception e) {
-                System.out.println("Произошла ошибка");
-            }
             i++;
         }
+        assertDisplayed(R.id.resultTv);
+        assertDisplayed("Вы прошли игру без единой ошибки");
 
-        sleep(3600);
         assertDisplayed(R.id.gameResultView);
-        assertContains("Вы прошли игру без единой ошибки");
-        sleep(5000);
-        assertDisplayed(R.string.hello_text);
+        sleep(4000);
     }
 
     public void Question(String text, boolean answer) {
-        sleep(5000);
+        sleep(4000);
         assertDisplayed(text);
-        clickOn(answer ? R.id.believe_btn : R.id.dont_believe_btn);
+        longClickOn(answer ? R.id.believe_btn : R.id.dont_believe_btn);
         assertDisplayed(R.string.right);
-        sleep(8000);
+        sleep(3600);
     }
 
+    @Test
+    public void useAppContext() {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        assertEquals("com.mrsony.idontbelieve", appContext.getPackageName());
+    }
 }
