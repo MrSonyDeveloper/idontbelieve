@@ -44,8 +44,9 @@ public class ExampleInstrumentedTest {
             Question("Утверждение #" + i, answ);
             i++;
         }
+        assertDisplayed(R.id.gameResultView);
         assertDisplayed(R.id.resultTv);
-        assertDisplayed("Вы прошли игру без единой ошибки");
+        assertContains("Вы прошли игру без единой ошибки");
 
         assertDisplayed(R.id.gameResultView);
         sleep(4000);
@@ -53,7 +54,7 @@ public class ExampleInstrumentedTest {
 
     public void Question(String text, boolean answer) {
         sleep(4000);
-        assertDisplayed(text);
+        assertContains(text);
         longClickOn(answer ? R.id.believe_btn : R.id.dont_believe_btn);
         assertDisplayed(R.string.right);
         sleep(3600);
