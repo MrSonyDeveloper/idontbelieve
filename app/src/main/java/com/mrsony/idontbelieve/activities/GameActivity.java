@@ -80,7 +80,8 @@ public class GameActivity extends AppCompatActivity {
     private void onBelieveButtonClick(boolean answer) {
         gameLayout.removeView(currentQuestionRow);
         buttonView.setVisibility(View.GONE);
-        if (currentQuestion.isCorrectAnswer() == answer) {
+        boolean answerResult = currentQuestion.isCorrectAnswer() == answer;
+        if (answerResult) {
             positiveBadge.setVisibility(View.VISIBLE);
             correctAnswersCount++;
         } else {
@@ -104,6 +105,6 @@ public class GameActivity extends AppCompatActivity {
             currentQuestionRow = getLayoutFromQuestion(questionList.get(currentQuestionIndex));
             gameLayout.addView(currentQuestionRow);
             buttonView.setVisibility(View.VISIBLE);
-        }, 3500);
+        }, answerResult ? 1500 : 3500);
     }
 }
