@@ -98,8 +98,6 @@ public class GameActivity extends AppCompatActivity {
         currentQuestionIndex++;
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            positiveBadge.setVisibility(View.GONE);
-            negativeBadge.setVisibility(View.GONE);
             if (currentQuestionIndex >= questionList.size()) {
                 Intent intent = new Intent();
                 intent.putExtra(MainActivity.QUESTIONS_COUNT_KEY, questionList.size());
@@ -108,6 +106,8 @@ public class GameActivity extends AppCompatActivity {
                 finish();
                 return;
             }
+            positiveBadge.setVisibility(View.GONE);
+            negativeBadge.setVisibility(View.GONE);
             currentQuestion = questionList.get(currentQuestionIndex);
             currentQuestionRow = getLayoutFromQuestion(questionList.get(currentQuestionIndex));
             gameLayout.addView(currentQuestionRow);
