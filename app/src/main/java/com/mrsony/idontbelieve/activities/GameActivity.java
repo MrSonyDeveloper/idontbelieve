@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.mrsony.idontbelieve.MainActivity;
 import com.mrsony.idontbelieve.R;
@@ -46,6 +48,11 @@ public class GameActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Window window = getWindow();
+        WindowInsetsControllerCompat wic = new WindowInsetsControllerCompat(window, window.getDecorView());
+        wic.setAppearanceLightStatusBars(false);
+        window.setStatusBarColor(getColor(R.color.status_bar_color));
+
         gameLayout = findViewById(R.id.game_view);
         positiveBadge = findViewById(R.id.positiveBadge);
         negativeBadge = findViewById(R.id.negative_badge);
@@ -53,10 +60,10 @@ public class GameActivity extends AppCompatActivity {
         justificationTv = negativeBadge.findViewById(R.id.justificationTv);
 
         Button believeButton = findViewById(R.id.believe_btn);
-        believeButton.setOnClickListener(view -> onBelieveButtonClick(true));
+        believeButton.setOnClickListener(view -> onButtonClick(true));
 
         Button dontBeliveButton = findViewById(R.id.dont_believe_btn);
-        dontBeliveButton.setOnClickListener(view -> onBelieveButtonClick(false));
+        dontBeliveButton.setOnClickListener(view -> onButtonClick(false));
 
         questionList = questionService.getQuestions();
 
@@ -77,7 +84,7 @@ public class GameActivity extends AppCompatActivity {
         return questionView;
     }
 
-    private void onBelieveButtonClick(boolean answer) {
+    private void onButtonClick(boolean answer) {
         gameLayout.removeView(currentQuestionRow);
         buttonView.setVisibility(View.GONE);
         boolean answerResult = currentQuestion.isCorrectAnswer() == answer;

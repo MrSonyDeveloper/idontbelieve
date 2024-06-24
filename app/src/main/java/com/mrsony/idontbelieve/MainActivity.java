@@ -72,8 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 () -> {
                     gameResultView.setVisibility(View.GONE);
                     helloView.setVisibility(View.VISIBLE);
-                },
-                1500
+                }, 2500
         );
     }
 }

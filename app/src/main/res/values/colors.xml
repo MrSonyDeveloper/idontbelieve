@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="negative_answer">#F44336</color>
     <color name="positive_answer">#4CAF50</color>
+    <color name="status_bar_color">#6750A4</color>
 </resources>
